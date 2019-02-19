@@ -9,14 +9,15 @@ var http = require('http');
 var httpServer = http.createServer(app); 
 httpServer.listen(4480);
 
-// 19_2_19 12:03 adding functionality to return test.html when called
-
-app.get('/test.html', function (req, res){
-	// run serverside code
-	console.log ('test.html requested');
-	// note that "_dirname" means diretory name and gives path to studentserver.js file
-	re.sendFile(_dirname + '/test.html');
-});
+// 19_2_19 12:44 code to cal for anyfile
+app.get('/:fileName', function(req, res){
+	// run server side code
+	var fileName = req.params,fileName;
+	console.log(fileName+'requested');
+	// __dirname = gives path to where file is located
+	res.sendFile(__dirname + '/'+fileName):
+})
+})
 
 app.get('/',function (req,res) {
 	res.send("hello world from the HTTP server"); 
