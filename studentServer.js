@@ -3,6 +3,13 @@ var express = require('express');
 var path = require('path');
 var app = express();
 
+// Add the body-parser so as to be able to process the uploaded data
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+app.use(bodyParser.json());
+
 
 // modify the code for to “cross origin request - ie requests for data from this server -
 //via another server (the PhoneGap server).
