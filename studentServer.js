@@ -3,6 +3,26 @@ var express = require('express');
 var path = require('path');
 var app = express();
 
+
+// 19-4-3 @ 16;51 adding required database connectivity code and set up a database connection
+
+var fs = require('fs');
+var pg = require('pg');
+var configtext = "" + fs.readFileSync("/home/studentuser/certs/postGISConnection.js");
+
+// now convert the configruation file into the correct format
+// -i.e. a name/value pair array
+var configarray = configtext.split(",");
+var config = {};
+for (var i = 0; i < configarray.length; i++) {
+    var split = configarray[i].split(':');
+    config[split[0].trim()] = split[1].trim();
+}
+
+var pool = new pg.Pool(config)
+
+
+
 // Add the body-parser so as to be able to process the uploaded data
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({
