@@ -30,6 +30,13 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+// add an http server to serve files to the Edge browser
+// due to certificate issues it rejects the https files
+// if they are not directly called in a typed URL
+var http = require('http');
+var httpServer = http.createServer(app);
+httpServer.listen(4480);
+
 
 // modify the code for to “cross origin request - ie requests for data from this server -
 //via another server (the PhoneGap server).
@@ -43,12 +50,7 @@ app.use(function (req, res, next) {
 
 
 
-// add an http server to serve files to the Edge browser
-// due to certificate issues it rejects the https files
-// if they are not directly called in a typed URL
-var http = require('http');
-var httpServer = http.createServer(app);
-httpServer.listen(4480);
+
 
 
 app.get('/', function (req, res) {
