@@ -270,6 +270,38 @@ app.post('/uploadQuestion',function(req,res){
 
 
 
+app.post('/uploadAnswer',function(req,res){
+  // note that we are using POST here as we are uploading data
+  // so the parameters form part of the BODY of the request rather than the RESTful API
+  console.dir(req.body);
+
+  pool.connect(function(err,client,done) {
+        if(err){
+            console.log("not able to get connection "+ err);
+            res.status(400).send(err);
+        }
+
+var param1 =  req.body.port_id ;
+var param2 =  req.body.question_id ;
+var param3 =  req.body.answer_selected;
+var param4 =  req.body.correct_answer ;
+
+
+var querystring = "INSERT into public.quizanswers (port_id, question_id, answer_selected, correct_answer) values (";
+querystring += "$1,$2,$3,$4)";
+        console.log(querystring);
+        client.query(querystring,[param1,param2,param3,param4],function(err,result) {
+          done();
+          if(err){
+               console.log(err);
+               res.status(400).send(err);
+          }
+          res.status(200).send("Answer inserted for user "+req.body.port_id);
+       });
+    });
+});
+
+
 // serving text
 app.get('/', function(req, res){
     // server-side code
